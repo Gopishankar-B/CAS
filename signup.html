@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup and Login - Student Management System</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Signup Form -->
+        <div id="signup-form">
+            <h2>Signup</h2>
+            <form id="signup-form-data">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="button" onclick="submitSignupForm()">Signup</button>
+            </form>
+            <p class="form-footer">Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+        </div>
+
+        <!-- Login Form (Initially hidden) -->
+        <div id="login-form" style="display: none;">
+            <h2>Login</h2>
+            <form id="login-form-data">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="button" onclick="submitLoginForm()">Login</button>
+            </form>
+            <p class="form-footer">Don't have an account? <a href="#" onclick="toggleForms()">Signup</a></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            var signupForm = document.getElementById('signup-form');
+            var loginForm = document.getElementById('login-form');
+            
+            if (signupForm.style.display === 'none') {
+                signupForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            } else {
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            }
+        }
+
+        function submitSignupForm() {
+            var formData = new FormData(document.getElementById('signup-form-data'));
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/signup', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('Signup successful!');
+                    // Optionally redirect or perform other actions after signup
+                } else {
+                    alert('Signup failed. Please try again.');
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function submitLoginForm() {
+            var formData = new FormData(document.getElementById('login-form-data'));
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    alert('Login successful!');
+                    window.location.href = 'dashboard.html'; // Redirect to dashboard or other page
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            };
+            xhr.send(formData);
+        }
+    </script>
+</body>
+</html>
